@@ -1,0 +1,35 @@
+Source: nedit
+Section: editors
+Priority: optional
+Maintainer: Paul Gevers <elbrus@debian.org>
+Build-Depends: debhelper (>= 9.20150628),
+               libmotif-dev,
+               libx11-dev,
+               libxt-dev,
+               x11proto-core-dev,
+               bison,
+               perl
+Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/nedit.git
+Vcs-Git: https://anonscm.debian.org/git/collab-maint/nedit.git
+Homepage: http://sourceforge.net/projects/nedit/
+Standards-Version: 3.9.8
+
+Package: nedit
+Architecture: any
+Multi-Arch: foreign
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Recommends: xfonts-100dpi | xfonts-75dpi | xfonts-100dpi-transcoded | xfonts-75dpi-transcoded
+Conflicts: nedit-dmotif, nedit-smotif
+Replaces: nedit-dmotif, nedit-smotif
+Suggests: csh
+Description: powerful, customizable, Motif based text editor
+ NEdit is a multi-purpose text editor for the X Window System, which
+ combines a standard, easy to use, graphical user interface with the
+ thorough functionality and stability required by users who edit text
+ eight hours a day. It provides intensive support for development in
+ a wide variety of languages, text processors, and other tools, but
+ at the same time can be used productively by just about anyone who
+ needs to edit text.
+ .
+ Because of its mature age, NEdit does not support UTF-8 text files,
+ nor will that be implemented.

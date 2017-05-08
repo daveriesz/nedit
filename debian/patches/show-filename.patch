@@ -1,0 +1,20 @@
+Description: Make filenames more visible on tabs if one has many open files.
+ With this patch (longer parts of) filenames will be showed on tabs. 
+ Unfortunately it is still not sufficient. TODO: Improve long filenames.
+Origin: http://marc.info/?l=nedit-develop&m=114296034012740&w=2
+
+--- a/Microline/XmL/Folder.c
++++ b/Microline/XmL/Folder.c
+@@ -912,6 +912,12 @@
+ 	  tabEffCount++;
+ 	}
+ 	
++    /* Make filenames more visible on tabs if one has many open files. */
++    if (f->folder.tabsPerRow && f->folder.tabsPerRow < tabEffCount)
++    {
++        tabEffCount = f->folder.tabsPerRow;
++    }
++
+       tabPaddingWidth = (st + co + f->folder.marginWidth + ht +
+ 	      f->folder.tabs[0]->core.border_width) * 2;
+       if (maxTabWidth * tabEffCount > f->core.width)

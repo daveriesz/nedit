@@ -1,0 +1,67 @@
+Description: Nedits help text shows the date and time of compilation
+ which prevents the package to be build reproducible. Disabling this
+ part of the help text should prevent the issue.
+Author: Paul Gevers <elbrus@debian.org>
+
+Index: nedit/source/nc.c
+===================================================================
+--- nedit.orig/source/nc.c
++++ nedit/source/nc.c
+@@ -1003,10 +1003,8 @@ static void copyCommandLineArg(CommandLi
+ static void printNcVersion(void ) {
+    static const char *const ncHelpText = \
+    "nc (NEdit) Version 5.6 (November 2009)\n\n\
+-     Built on: %s, %s, %s\n\
+-     Built at: %s, %s\n";
++     Built on: %s, %s, %s\n";
+      
+     fprintf(stdout, ncHelpText,
+-                  COMPILE_OS, COMPILE_MACHINE, COMPILE_COMPILER,
+-                  __DATE__, __TIME__);
++                  COMPILE_OS, COMPILE_MACHINE, COMPILE_COMPILER);
+ }
+Index: nedit/source/help.c
+===================================================================
+--- nedit.orig/source/help.c
++++ nedit/source/help.c
+@@ -230,7 +230,6 @@ static const char *getBuildInfo(void)
+     static const char *bldFormat =
+         "%s\n"
+         "     Built on: %s, %s, %s\n"
+-        "     Built at: %s, %s\n"
+         "   With Motif: %s%d.%d.%d [%s]\n"
+         "Running Motif: %d.%d [%s]\n"
+         "       Server: %s %d\n"
+@@ -270,7 +269,6 @@ static const char *getBuildInfo(void)
+         sprintf(bldInfoString, bldFormat,
+              NEditVersion,
+              COMPILE_OS, COMPILE_MACHINE, COMPILE_COMPILER,
+-             linkdate, linktime,
+              stabilities[stab], XmVERSION, XmREVISION, XmUPDATE_LEVEL,
+              XmVERSION_STRING, 
+              xmUseVersion/1000, xmUseVersion%1000,
+Index: nedit/source/linkdate.c
+===================================================================
+--- nedit.orig/source/linkdate.c
++++ nedit/source/linkdate.c
+@@ -35,5 +35,5 @@
+ #include "../debug.h"
+ #endif
+ 
+-const char linkdate[] = __DATE__;
+-const char linktime[] = __TIME__;
++const char linkdate[] = "dummy";
++const char linktime[] = "dummy";
+Index: nedit/doc/setext
+===================================================================
+--- nedit.orig/doc/setext
++++ nedit/doc/setext
+@@ -711,7 +711,7 @@ sub date
+ {
+     $format = $_[0];
+     
+-    ( $sec,$min,$hour,$mday,$mon,$year,@ignore ) = localtime( time );
++    ( $sec,$min,$hour,$mday,$mon,$year,@ignore ) = gmtime($ENV{SOURCE_DATE_EPOCH} || time);
+     $month = (January,February,March,April,May,June,July,
+               August,September,October,November,December)[$mon];
+     $year  = $year + 1900;

@@ -1,0 +1,18 @@
+Author: Jari Aalto <jari.aalto@cante.net>
+Description: Do not ask questions at build time; would interrup auto builds
+
+---
+ util/check_lin_tif.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/util/check_lin_tif.c
++++ b/util/check_lin_tif.c
+@@ -124,7 +124,7 @@
+                 "Please report your success or failure with this version to:\n"
+                 "\tdevelop@nedit.org\n"
+                 "\nHIT ENTER TO CONTINUE\n");
+-            fgets(buf, 2, stdin);
++            /* fgets(buf, 2, stdin); */
+             return EXIT_SUCCESS;
+         }
+ #else

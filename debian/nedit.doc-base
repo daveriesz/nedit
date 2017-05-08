@@ -1,0 +1,9 @@
+Document: nedit
+Title: NEdit User's Manual
+Author: The NEdit developers
+Abstract: This document describes the use of NEdit.
+Section: Editors
+
+Format: HTML
+Index: /usr/share/doc/nedit/html/nedit.html
+Files: /usr/share/doc/nedit/html/*.html

@@ -1,0 +1,11 @@
+40_Pointer_to_Integer.patch
+50_ChangeNCinMan.patch
+90_build_no_ask.patch
+92_format_string.patch
+fix_typo_in_help.patch
+language-mode-detection.patch
+multiple-tabrows.patch
+show-filename.patch
+drag-move-v1_5.patch
+allow_reproducible_builds.patch
+improve_no_X_font_handling.patch

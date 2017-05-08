@@ -1,0 +1,507 @@
+nedit (1:5.6a-5) unstable; urgency=medium
+
+  * Real upload of 1:5.6a-4 (I fail to upload it)
+
+ -- Paul Gevers <elbrus@debian.org>  Mon, 12 Sep 2016 20:20:24 +0200
+
+nedit (1:5.6a-4) UNRELEASED; urgency=medium
+
+  * Update desktop file to use %F instead of %U (LP: #1395437)
+  * Remove menu per TC ruling
+  * Remove nedit-dbg package and build with new debug framework instead
+  * Add improve_no_X_font_handling.patch from upstream to avoid Nedit to
+    crash when no X-font is available (LP: #1415309)
+  * Replace Nedit.xpm by 128x128 pixel nedit.png
+  * Update d/control with current upstream website and https for VCS-git
+  * Bump Standards (no further changes)
+
+ -- Paul Gevers <elbrus@debian.org>  Fri, 09 Sep 2016 08:53:26 +0200
+
+nedit (1:5.6a-3) unstable; urgency=medium
+
+  * Still more repoducible build issues, documentation was containing
+    the build date. Updated allow_reproducible_builds.patch
+  * Update watch file to pick up the "weird" number we now have.
+
+ -- Paul Gevers <elbrus@debian.org>  Sat, 03 Oct 2015 16:20:46 +0200
+
+nedit (1:5.6a-2) unstable; urgency=medium
+
+  * Upload to unstable
+  * Previous fix for reproducible builds was not enough. Extending the
+    patch
+
+ -- Paul Gevers <elbrus@debian.org>  Mon, 27 Apr 2015 18:56:54 +0200
+
+nedit (1:5.6a-1) experimental; urgency=medium
+
+  * New upstream release
+  * Add allow_reproducible_builds.patch to avoid __DATE__ and __TIME__
+    macros
+  * Update upstream website as they lost their domain
+  * Recommends on x fonts (LP: #1415309)
+
+ -- Paul Gevers <elbrus@debian.org>  Tue, 14 Apr 2015 22:01:01 +0200
+
+nedit (1:5.6-1) experimental; urgency=medium
+
+  * New upstream release (wow, after all this time)
+  * Drop patches applied upstream and refresh the others
+  * Add one new typo found by Lintian to fix_typo_in_help.patch
+  * Bump Standards version (no changes)
+  * Update Vcs-Browser to canonical location
+  * Update Debian version string in documentation
+
+ -- Paul Gevers <elbrus@debian.org>  Wed, 10 Dec 2014 20:08:06 +0100
+
+nedit (1:5.6~cvs20081118-9) unstable; urgency=low
+
+  [ Markus ]
+  * Patch source/preferences.c for language mode setting when a file is loaded:
+    Now first use the file extension and then look in its contents. The former
+    order prevented correct language detection due to ambigous recognition
+    patterns.
+  * Add patch "ewmh-raise" to raise a (partially) hidden nedit window when
+    opening a new file from nedit-nc.
+  * Add patch "move tab by drag and drop" to be able to move tabs around
+  * Patch source/window.c to allow multiple tab rows
+  * Add a small patch to Microline/XmL/Folder.c to make longer parts of
+    filenames visible on tabs when many files are open. TODO: Still more
+    characters could be shown in the bottom row.
+  * Improve desktop integration (nedit.desktop)
+
+  [ Paul Gevers ]
+  * Update description so it mentions that UTF-8 files are not supported to
+    prevent wrong expectations.
+  * Add d/NEWS to describe how to activate the multirow tabbing and the drag
+    and drop feature
+
+ -- Paul Gevers <elbrus@debian.org>  Thu, 01 May 2014 19:55:30 +0200
+
+nedit (1:5.6~cvs20081118-8) unstable; urgency=low
+
+  [ Jari Aalto ]
+  * Removed deprecated dpatch and upgrade to packaging format "3.0 quilt"
+    (Closes: #664439).
+  * Standards-Version bumped to 3.9.4 (no changes needed).
+  * Updated debhelper to 9 due to moving rules to dh(1) format. The dh(1)
+    format makes it possible to utilize hardened build flags easily in the
+    build process.
+  * Added ${misc:Depends} to control files (Lintian).
+  * Removed 80_Update_version_description.patch and moved version update
+    to rules file. The version string cannot be set from a patch because it is
+    modified during the build dynamically from the current date.
+    (Closes: #694644)
+  * Added 90_build_no_ask.patch to build unattended. CFLAGS
+    option -DBUILD_UNTESTED_NEDIT would otherwise display
+    "HIT ENTER TO CONTINUE" question.
+  * Use hardened build flags; for this the sources also needed a new
+    92_format_string.patch.
+    http://wiki.debian.org/ReleaseGoals/SecurityHardeningBuildFlags
+  * Update d/copyright to the machine-readable format v1.0
+  * Remove spurious whitespaces from debian files
+
+  [ Paul Gevers ]
+  * Update my e-mail address
+  * Remove 70_EditVersionText.dpatch as the current version of the library
+    is not known-bad
+  * Add Vcs-* fields to d/control
+  * Set package to Multi-arch: foreign
+  * Remove build-depends on libxp-dev (Closes: #623662)
+  * Build against libmotif-dev instead of lesstif2-dev now it finaly entered
+    main (should get rid of quite some old bugs).
+  * Create all CFLAGS in d/rules, thus 20_ChangeFlagsLinuxMakefile.patch is
+    obsolete. Now build with BUILD_UNTESTED_NEDIT and HAVE__XMVERSIONSTRING, and
+    without USE_DIRENT and USE_LPR_PRINT_CMD. The later means the default for
+    the print command is now lp i.s.o. lpr.
+
+ -- Paul Gevers <elbrus@debian.org>  Mon, 27 May 2013 21:22:21 +0200
+
+nedit (1:5.6~cvs20081118-7) unstable; urgency=low
+
+  * Fixed the debian/rules to really create the debugging package
+    (Closes: #549328)
+
+ -- Paul Gevers <paul@climbing.nl>  Mon, 05 Oct 2009 21:13:54 +0200
+
+nedit (1:5.6~cvs20081118-6) unstable; urgency=low
+
+  * Standards-Version bumped to 3.8.3 (no changes needed)
+  * Created debugging symbols package
+  * Added 10_EOF_Parser_error.dpatch created from upstream cvs
+    to fix a parser error (upstream bug 2687525)
+  * Added 30_off_by_one.dpatch created from upstream cvs to fix for
+    off-by-one error, potentially causing a crash (upstream bug 2858723)
+  * Added 40_Pointer_to_Integer.dpatch to fix compiler warning on 64 bit
+    (from upstream bug 2846694)
+  * Added 80_Update_version_description.dpatch to create a version
+    string reflecting the real version, i.e. a cvs checkout of 5.6.
+  * Updated patches to comply with DEP3 format for patches.
+
+ -- Paul Gevers <paul@climbing.nl>  Mon, 28 Sep 2009 18:21:01 +0200
+
+nedit (1:5.6~cvs20081118-5) unstable; urgency=low
+
+  * Apply 70_EditVersionText.dpatch and slightly improved the text.
+
+ -- Paul Gevers <paul@climbing.nl>  Fri, 08 May 2009 20:18:58 +0200
+
+nedit (1:5.6~cvs20081118-4) UNRELEASED; urgency=low
+
+  * Upload to unstable.
+  * Standards-Version bumped to 3.8.1 (no changes needed)
+  * Bumped build-depends on lesstif2-dev to >= 1:0.95.0-2.3 because
+    of crashing bug in previous versions.
+  * Improved debian/nedit.desktop, proper use of fields, and now
+    also install it.
+  * Added 70_EditVersionText.dpatch to improve the text shown on
+    "nedit -version" and remove the warning about a bad lesstif.
+
+ -- Paul Gevers <paul@climbing.nl>  Tue, 05 May 2009 21:50:55 +0200
+
+nedit (1:5.6~cvs20081118-3) experimental; urgency=low
+
+  * Removed source/nedit-nc in debian/rules clean target because
+    nedit fails to build twice
+  * Reference to GLP-2 in debian/copyright instead of GPL (Lintian
+    pedantic warning copyright-refers-to-symlink-license)
+  * Use "set -e" in debian/postinst and debian/prerm instead of
+    setting it on the #! line (Policy 10.4)
+
+ -- Paul Gevers <paul@climbing.nl>  Thu, 12 Feb 2009 20:14:01 +0100
+
+nedit (1:5.6~cvs20081118-2) UNRELEASED; urgency=low
+
+  * Removed patch 01_CleanupLinks and remove the symlinks directly
+    in debian/rules (fails to build twice in a row otherwise).
+
+ -- Paul Gevers <paul@climbing.nl>  Tue, 10 Feb 2009 21:31:15 +0100
+
+nedit (1:5.6~cvs20081118-1) UNRELEASED; urgency=low
+
+  * CVS checkout of 5.6 branch to experiment with upcoming release
+  * New maintainer (Closes: 499316)
+  * Adjusted short description (removed "A" at beginning)
+  * Added patch system (dpatch)
+  * Added debian/README.source
+  * Checked original diff.gz changes (all implemented upstream or solved
+    below)
+  * Clean up of symlinks in Makefile clean rule (patch 01_CleanupLinks)
+  * Added -DBUILD_BROKEN_NEDIT and -DBUILD_UNTESTED_NEDIT to CFLAGS in
+    debian/rules and changed Makefile.linux to use it because LessTif2
+    version in Debian is considered bugged by upstream
+    (patch 20_ChangeFlagsLinuxMakefile)
+  * Updated debian/rules to use dh_install
+  * Removed doc/README.FAQ (not relevant)
+  * Build man pages from pod source to change name of NC in Nedit-NC
+    (patch 50_ChangeNCinMan)
+  * Created debian/nedit.desktop file and install it
+
+ -- Paul Gevers <paul@climbing.nl>  Mon, 02 Feb 2009 14:50:37 +0100
+
+nedit (1:5.5-3) unstable; urgency=low
+
+  * QA upload
+  * Trigger relinking by uploading (Closes: 431973)
+  * Standards-Version changed to 3.8.0 (necessary changes included below)
+  * Added debian/watch file
+  * Changed build-dependency x-dev (obsolete) to x11proto-core-dev
+  * Changed build-dependency debhelper to > 5
+  * Added debian/compat level 5
+  * Removed DH_COMPAT line from debian/rules (handeled by debian/compat)
+  * Added -Wall to CFLAGS in debian/rules to match debian-policy 10.1
+  * Changed maintainers to QA and removed uploaders (package is orhaned, see
+    bug #499316)
+  * Added homepage to debian/control
+  * Fixed doc-base-invalid-document-field lintian error by converting capitals
+    in docid
+  * Fixed doc-base-uses-applications-section lintian warning by removing
+    unneeded "Apps/" part
+  * Converted debian/copyright to UTF-8
+  * Fixed menu-item-uses-apps-section lintian warning by replacing Apps by
+    Applications in section field
+  * Escaped 3 hyphens in doc/nc.man
+
+ -- Paul Gevers <paul@climbing.nl>  Mon, 17 Nov 2008 22:53:48 -0600
+
+nedit (1:5.5-2) unstable; urgency=low
+
+  * add Nedit icon to menu entry (in debian/menu and debian/rules)
+  * acknowledge the changes from the non maintainer upload
+    (Closes: #349124)
+  * correct FSF adress in debian/copyright file
+  * Standards-Version bumped to 3.6.2.2 -- no changes.
+  * remove libxmu-dev from build-depends (useless)
+  * remove -DBUILD_UNTESTED_NEDIT from Makefile.linux and remove test
+    on BUILD_UNTESTED_NEDIT flag in util/misc.c
+    Indeed, the use of a specific version has no sense for a shared
+    library. (Closes: #343703)
+  * apply patch Xorg-32.diff from Nedit upstream to util/misc.c to correct
+    an issue with Xorg (Closes: #330048, #318261)
+
+ -- Alexandre Pineau <alexandre.pineau@free.fr>  Mon,  6 Feb 2006 23:34:45 +0100
+
+nedit (1:5.5-1.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Replace build-dependency on xlibs-dev with an explicit build-dependency
+    on each required package. (Closes: #346890)
+
+ -- Steinar H. Gunderson <sesse@debian.org>  Sat, 21 Jan 2006 03:07:31 +0100
+
+nedit (1:5.5-1) unstable; urgency=low
+
+  * New upstream release (Closes: #283086)
+  * clean links from Xlt and Microline/XmL directories
+  * apply patch from yooden to correct the "cursor blinks while typing" bug
+    (Closes: #60672)
+  * use the noopt flag and O2 optimization (Closes: #240408)
+
+ -- Alexandre Pineau <alexandre.pineau@free.fr>  Thu, 31 Mar 2005 19:06:49 +0200
+
+nedit (1:5.4-1) unstable; urgency=low
+
+  * New Maintainer: Alexandre Pineau (Closes: #229919)
+  * New co-maintainer: Thosten Haude
+  * New upstream release :
+    + Replaces csh-specific scriptlet with awklet.
+    + Workaround for KDE's FONTLIST bug (and for the various BACKGROUND and
+      FOREGROUND resource values).(Closes: #184553)
+  * sh is now the default shell for NEdit (Closes: #178686)
+  * Use lesstif2 (Motif 2.1 compatible) for building the package and update the
+    Build-depends (Closes: #162209, #174065)
+  * remove manual confirmation to continue the building of NEdit if a an
+    untested version of Lesstif is used.
+  * add HTML documentation to doc-base
+  * call the clean rule instead of cleaning the sources tree 'by hand'
+  * clean links from util and source directories
+  * link NEdit dynamically to lesstif (Closes: #195321)
+  * mfile menu.c, line 4343 : remove {} from badFilenameChars to correct the
+    neditdb corruption issue with Tom Lord's Arch revisions control system
+    (Closes: #213564)
+  * use quoted string in the file menu and the title of the menu entry is now
+    properly capitalized.
+  * Standards-Version bumped to 3.6.1.0 -- no changes.
+
+ -- Alexandre Pineau <alexandre.pineau@free.fr>  Sun, 22 Feb 2004 17:27:34 +0100
+
+nedit (1:5.3-2) unstable; urgency=low
+
+  * Package orphaned, maintainer now the QA-group.
+  * Approve previous NMU. Closes: #156322, #117770.
+  * Fix prerm. Closes: #213325, #214808.
+
+ -- Andreas Barth <aba@not.so.argh.org>  Wed, 28 Jan 2004 19:19:08 +0000
+
+nedit (1:5.3-1) unstable; urgency=low
+
+  * New Maintainer: Martin Loschwitz (blessed by Erik Anderson)
+    - thanks goes to Erik Anderson for his work
+  * New Upstream version (from Nedit website, version 5.3) (Closes: #159477, #157254)
+  * debian/rules: Switched from debmake to debhelper (Closes: #170355)
+  * debian/postinst: Fix manpage path (Closes: #171601)
+
+ -- Martin Loschwitz <madkiss@madkiss.org>  Mon, 23 Dec 2002 17:00:00 +0100
+
+nedit (1:5.2-1.2) unstable; urgency=low
+
+  * NMU to fix bug 156322 as part of the 2nd Sarge BSP.
+  * debian/postinst:
+    - Changed symlink name from /usr/man/man1/editor.1.gz to
+      /usr/share/man/man1/editor.1.gz, as per patch supplied to bug 156322.
+
+
+ -- Matthew Palmer <mpalmer@debian.org>  Sat, 23 Nov 2002 14:12:41 +1100
+
+nedit (1:5.2-1.1) unstable; urgency=low
+
+  * NMU to fix build-failures
+  * debian/control:
+    - add debmake to Build-Depends
+    - also corrected existing errors in Build-Depends usage
+    - bumped Standards-Version
+
+ -- Branden Robinson <branden@debian.org>  Tue,  6 Nov 2001 13:33:53 -0500
+
+nedit (1:5.2-1) unstable; urgency=low
+
+  * New upstream version -- NEdit 5.2
+
+ -- Erik Andersen <andersee@debian.org>  Mon, 29 Oct 2001 22:12:29 -0700
+
+nedit (1:5.1.1-5) unstable; urgency=low
+
+  * Fix a missing include file (closes: #93027, #86181)
+
+ -- Erik Andersen <andersee@debian.org>  Thu,  5 Apr 2001 12:33:59 -0600
+
+nedit (1:5.1.1-4) unstable; urgency=low
+
+  * Fix a build depends problem for unstable (closes: #92672)
+
+ -- Erik Andersen <andersee@debian.org>  Tue,  3 Apr 2001 01:14:45 -0600
+
+nedit (1:5.1.1-3) stable unstable; urgency=low
+
+  * Upload for potato/stable so nedit can finally get out of
+    non-free for potato.  It is about time.
+
+ -- Erik Andersen <andersee@debian.org>  Mon, 12 Mar 2001 21:40:06 -0700
+
+nedit (1:5.1.1-2) unstable; urgency=low
+
+  * Fix the Build-depends (closes: #66280, #84571)
+  * Added Suggests: cvs (closes: #70726)
+
+ -- Erik Andersen <andersee@debian.org>  Tue, 13 Feb 2001 00:17:50 -0700
+
+nedit (1:5.1.1-1) unstable; urgency=low
+
+  * New upstream release -- Now available under the GPL!!!
+    (closes: #45335, #51980, #55889, #58763)
+  * Added Build-Depends (closes: #59498)
+  * Resubmitting nedit 5.1.1 for woody, since it seems to have
+    gotten lost last time I submitted it...
+
+ -- Erik Andersen <andersee@debian.org>  Sun, 18 Jun 2000 18:35:32 -0400
+
+nedit (5.02-6) unstable; urgency=low
+
+  * Recompile against lesstif 0.89 and compile with -DUSE_XMIM.
+    From the Lesstif 0.88.9 Release notes:
+
+      Fixed the problem with nedit and accelerators. nedit installs and
+      removes accelerators _alot_. The mask were were using to install and
+      remove event handlers did not match, therefore the handler was not
+      removed, but all the data the handler used was freed. Needless to say
+      strange things happened after this.
+
+    Looks like the nedit bugs are _finally_ fixed (thanks to Bjoern Brill
+    for letting me know).
+
+
+ -- Erik Andersen <andersee@debian.org>  Sun, 12 Sep 1999 22:33:54 -0600
+
+nedit (5.02-4) unstable frozen; urgency=low
+
+  * Make nedit comply with the keyboard policy by changing the default to
+     stop trying to remap the delete key.  Fixes Bug#29472
+
+  * I checked all the other nedit bugs in the bug tracking system, and they
+     seem to have been lesstif bugs, or I already fixed them and forgot to
+     close them, so this release lets me close out all the pending bugs.
+     Fixes Bug#15616, Bug#18867, Bug#20106, Bug #20477, Bug#20709,
+     Bug#23976, Bug#24257, and Bug #14512
+
+ -- Erik Andersen <andersee@debian.org>  Tue, 17 Nov 1998 21:26:30 -0700
+
+nedit (5.02-3) unstable frozen; urgency=low
+
+  * Recomplile to get nedit to depend on lesstifg-0.83-5 (which is the
+     latest and greatest) instead of the earlier lesstifg-19980310).
+
+ -- Erik Andersen <andersee@debian.org>  Sun,  5 Apr 1998 11:32:48 -0600
+
+nedit (5.02-2) unstable frozen; urgency=low
+
+  * Fixed location of man pages
+
+ -- Erik Andersen <andersee@debian.org>  Wed,  1 Apr 1998 22:56:44 -0700
+
+nedit (5.02-1) unstable frozen; urgency=low
+
+  * Fixed minor packaging issues so lintian would shut-up.
+  * This is an upstream bug-fix release.  Bug fixes include:
+
+	 - -import did not work as advertised in 5.0.1. When used, it
+	   re-set a number of preferences back to default values. Could
+	   also potentially cause a crash.
+	 - Macro -> Repeat crashes on some systems.
+	 - Mouse state can get "stuck" on Alpha-based systems.
+	 - Combination of auto-wrap, auto-indent, and unbreakable lines
+	   extending the width of the window, caused nedit to unnecessarily
+	   insert blank lines.
+	 - Incorrect case-insensitive comparison in character sets > 128
+	   bits.
+	 - in by-word drag-selection (double click then drag) when begun
+	   in the middle of a whitespace selection, anchor would revert
+	   to original cursor position rather than maintaining the entire
+	   whitespace block.
+	 - Language mode names containing spaces could not be used in
+	   language sensitive user-defined menu items.
+	 - New windows did not always see existing learn/replay sequence,
+	   recorded before the window was created.
+	 - Possible crash in search_string and search_window macros, when
+	   used with long search strings.
+	 - Possible crash in get_selection("any") macro.
+	 - Under Solaris, crashes on window opening, file dialog, and
+	   language mode selection, when user-defined sub-menus were used.
+	 - Filenames containing spaces could cause the .neditdb file to
+	   become unreadable.
+	 - Escape key could not be used to cancel file-selection dialogs
+	   when the file list had keyboard focus (which it almost always does).
+
+ -- Erik Andersen <andersee@debian.org>  Fri, 20 Mar 1998 23:42:37 -0700
+
+nedit (5.0-3) unstable; urgency=low
+
+  * Minor change to description, to explain that this is linked with
+     lesstif, and that lesstif still has a few problems that may affect
+     stability.
+
+ -- Erik Andersen <andersee@debian.org>  Fri, 17 Dec 1997 12:35:34 -0700
+
+nedit (5.0-2) unstable; urgency=low
+
+  * Fixed a stupid bug where I put things in /usr/bin/X11 instead of
+     /usr/bin/X11R6, but debian doesn't have this symlink (just me ;-)
+     This fixes bug #15135 and #15425
+  * added in the proper update-alternatives stuff per the new editor policy
+  * renamed "nc" to "nedit-nc" to avoid naming conflict with netcat.
+
+ -- Erik Andersen <andersee@debian.org>  Fri, 28 Nov 1997 02:47:46 -0700
+
+nedit (5.0-1) unstable; urgency=low
+
+  * New upstream source.  Changes include:
+       - Syntax highlighting with patterns for C, C++, Java, Fortran, Pascal,
+         Ada, Perl, Python, Tcl, Awk, Csh, HTML, LaTeX, VHDL, Verilog, etc.
+       - Completed macro extension language (Simple C/awk-like syntax)
+       - Language-sensitive preferences
+       - Continuous wrap and automatic-newline wrapping modes
+       - Configurable right-button pop up menu
+       - Searchable on-line help
+       - Programmable Smart indent.
+       - Word boundary matching (<>) in regular expressions
+       - Bug fixes.
+  * libc6
+  * Converted to use debhelper
+  * Now uses lesstif (no more nedit-dmotif and nedit-smotif).  Lesstif
+     now seems stable enough for Nedit to work fairly well.  The font selection
+     dialog box still doesn't work, and the right-mouse-button menu seems to
+     lock things up sometimes, but most everything else seems to work!
+
+ -- Erik Andersen <andersee@debian.org>  Sat, 22 Nov 1997 01:01:09 -0700
+
+nedit (4.0.3-1) unstable; urgency=low
+
+  * Changed to new upstream source, fixing a number of minor bugs.
+
+ -- Erik B. Andersen <andersee@debian.org>  Sun, 16 Feb 1997 23:19:04 -0600
+
+nedit (4.0.2-2) unstable; urgency=low
+
+  * Fixed a minor, and fortunatly benign type in rules
+  * Applied several patches from the upstream maintainer to fix some bugs
+        - middle mouse paste now works with no-auto-wrap mode
+        - fixed a crash in Revert to Saved on a newly emptied file
+        - fixed how Redo from newly saved Undo leaves window unmodified
+        - fixed a crash for SGIs (Not too helpful for the rest of us...)
+
+ -- Erik Andersen <andersee@et.byu.edu>  Fri, 25 Oct 1996 22:39:09 -0600
+
+nedit (4.0.2-1) unstable; urgency=low
+
+  * Initial release of NEdit as a Debian package
+
+ -- Erik Andersen <andersee@et.byu.edu>  Thu, 17 Oct 1996 05:09:24 -0600

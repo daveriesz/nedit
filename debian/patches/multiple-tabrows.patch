@@ -1,0 +1,59 @@
+Description: Enable more than one tab row.
+ The Microline folder widget is able to arrange tabs in more than one row.
+ Useful when a lot of tabs (=open files) exist.
+ .
+ This patch disables the rotation of tab rows. The default behaviour would be
+ to rotate the stack of tab rows so the active is in the lowest row.
+Author: Markus
+Origin: https://bugs.debian.org/744846
+--- a/source/window.c
++++ b/source/window.c
+@@ -558,7 +558,7 @@
+ 	    XmNmarginHeight, 0,
+ 	    XmNmarginWidth, 0,
+ 	    XmNspacing, 0,
+-    	    XmNresizable, False, 
++    	    XmNresizable, True,
+             XmNleftAttachment, XmATTACH_FORM,
+             XmNrightAttachment, XmATTACH_FORM,
+ 	    XmNshadowThickness, 0, NULL);
+--- a/Microline/XmL/Folder.c
++++ b/Microline/XmL/Folder.c
+@@ -1116,6 +1116,10 @@
+     }
+ 
+   /* move active row to bottom */
++  /* Disabled! This rotates the stack of tab rows and is irritating
++     at least. May be there should be some setting in preferences to
++     switch on/off this potentially annoying feature. */
++#if 0
+   tab = f->folder.activeW;
+   if (tab)
+     {
+@@ -1128,6 +1132,7 @@
+     }
+   else
+     f->folder.activeRow = -1;
++#endif
+ 
+   /* configure tab children */
+   for (i = 0; i < f->folder.tabCount; i++)
+@@ -1452,6 +1457,10 @@
+ 	XtMakeResizeRequest((Widget)f, width, height, NULL, NULL);
+     }
+   /* move active row to bottom */
++  /* Disabled! This rotates the stack of tab rows and is irritating
++     at least. May be there should be some setting in preferences to
++     switch on/off this potentially annoying feature. */
++#if 0
+   tab = f->folder.activeW;
+   if (tab)
+     {
+@@ -1464,6 +1473,7 @@
+     }
+   else
+     f->folder.activeRow = -1;
++#endif
+ 
+   /* configure tab children */
+   for (i = 0; i < f->folder.tabCount; i++)

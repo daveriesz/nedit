@@ -1,0 +1,70 @@
+#!/usr/bin/make -f
+
+#DH_VERBOSE = 1
+
+VERSION = NEdit released by Debian ($(shell head -1 debian/changelog | sed 's/.*(\(.*\)).*/\1/'))
+
+export DEB_BUILD_MAINT_OPTIONS=hardening=+all
+
+LDFLAGS = -Wl,--as-needed $(shell dpkg-buildflags --get LDFLAGS)
+
+CPPFLAGS = $(shell dpkg-buildflags --get CPPFLAGS)
+
+# For the flags see makefiles/Makefile.generic
+CFLAGS = -DBUILD_UNTESTED_NEDIT -DHAVE__XMVERSIONSTRING \
+	-Wall $(shell dpkg-buildflags --get CFLAGS)
+
+# See http://wiki.debian.org/HardeningWalkthrough#Handwritten_Makefiles
+CFLAGS += $(CPPFLAGS) $(LDFLAGS)
+
+# -----------------------------------------------------------------------
+
+# Modified during build. Keep original files intact.
+ORIG = source/help_data.h source/help_topic.h
+
+define save
+	# Save original files
+	for f in $(ORIG); do [ -f $$f._ ] || cp -a $$f $$f._ ; done
+endef
+
+define restore
+	# Restore original files
+	for f in $(ORIG); do [ ! -f $$f._ ] || mv $$f._ $$f; done
+endef
+
+# -----------------------------------------------------------------------
+
+override_dh_auto_build:
+	$(save)
+	sed -i s'/\(NEditVersion = "\).*"/\1$(VERSION)\\n"/' source/help_data.h
+
+	$(MAKE) CFLAGS="$(CFLAGS)" linux
+	$(MAKE) -C doc VERSION="$(VERSION)" all
+
+	mv doc/nc.man doc/nedit-nc.1
+	mv doc/nedit.man doc/nedit.1
+	mv source/nc source/nedit-nc
+	$(restore)
+
+override_dh_auto_clean:
+	# Generated files
+	rm -f doc/nedit.1 doc/nedit-nc.1 source/nedit-nc
+
+	$(MAKE) -C doc clean
+	$(MAKE) clean
+
+	find util source Xlt Microline/XmL -type l | \
+		xargs --no-run-if-empty rm -f
+
+	$(restore)
+
+override_dh_auto_test:
+	# Nothing to do, but nedit's Makefile processes wrongly if asked
+
+override_dh_auto_install:
+	# Nothing to do, but nedit's Makefile processes wrongly if asked
+
+%:
+	dh $@ --ddeb-migration='nedit-dbg (<< 1:5.6a-4~)'
+
+# End of file

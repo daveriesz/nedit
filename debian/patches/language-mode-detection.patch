@@ -1,0 +1,52 @@
+Description: Change order of language mode detection.
+ Now first use the file extension and then look in its contents. The former
+ order prevented correct language detection due to ambigous recognition
+ patterns.
+Author: Markus
+Origin: https://bugs.debian.org/744846
+--- a/source/preferences.c
++++ b/source/preferences.c
+@@ -4527,21 +4527,6 @@
+ 
+     /*... look for an explicit mode statement first */
+     
+-    /* Do a regular expression search on for recognition pattern */
+-    first200 = BufGetRange(window->buffer, 0, 200);
+-    for (i=0; i<NLanguageModes; i++) {
+-    	if (LanguageModes[i]->recognitionExpr != NULL) {
+-    	    if (SearchString(first200, LanguageModes[i]->recognitionExpr,
+-    	    	    SEARCH_FORWARD, SEARCH_REGEX, False, 0, &beginPos,
+-    	    	    &endPos, NULL, NULL, NULL))
+-            {
+-		XtFree(first200);
+-    	    	return i;
+-	    }
+-    	}
+-    }
+-    XtFree(first200);
+-    
+     /* Look at file extension ("@@/" starts a ClearCase version extended path,
+        which gets appended after the file extension, and therefore must be
+        stripped off to recognize the extension to make ClearCase users happy) */
+@@ -4569,6 +4554,21 @@
+     	}
+     }
+ 
++    /* Do a regular expression search on for recognition pattern */
++    first200 = BufGetRange(window->buffer, 0, 200);
++    for (i=0; i<NLanguageModes; i++) {
++    	if (LanguageModes[i]->recognitionExpr != NULL) {
++    	    if (SearchString(first200, LanguageModes[i]->recognitionExpr,
++    	    	    SEARCH_FORWARD, SEARCH_REGEX, False, 0, &beginPos,
++    	    	    &endPos, NULL, NULL, NULL))
++            {
++		XtFree(first200);
++    	    	return i;
++	    }
++    	}
++    }
++    XtFree(first200);
++
+     /* no appropriate mode was found */
+     return PLAIN_LANGUAGE_MODE;
+ }

@@ -1,0 +1,4 @@
+debian/nedit.png usr/share/icons/hicolor/128x128/apps/
+source/nedit usr/bin/
+source/nedit-nc usr/bin/
+debian/nedit.desktop usr/share/applications/

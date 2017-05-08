@@ -1,0 +1,12 @@
+nedit for Debian
+----------------------
+
+Note that due to a program name conflict with netcat (also named "nc"), NEdit's
+version of "nc" has been renamed to "nedit-nc".  Sorry for any confusion this
+may cause.
+
+The shell sh is used by default. You can switch to csh if necessary.
+
+Erik Andersen <andersee@debian.org>, Mon, 29 Oct 2001 22:12:29 -0700
+Martin Loschwitz <madkiss@madkiss.org>  Tue, 24 Dec 2002 14:35:00 +0100
+Alexandre Pineau <alexandre.pineau@free.fr> Tue, 2 Mar 2004

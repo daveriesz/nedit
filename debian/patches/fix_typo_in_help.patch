@@ -1,0 +1,44 @@
+Description: fix typo's in help text (Thanks Lintian)
+Author: Paul Gevers <elbrus@debian.org>
+Forwarded: no
+
+--- a/doc/help.etx
++++ b/doc/help.etx
+@@ -1094,7 +1094,7 @@
+ ..          respective states: RO, LO, *.
+ ..    %u    user name
+ ..   
+-..   The format string and the component buttons are continously synchronized.
++..   The format string and the component buttons are continuously synchronized.
+ ..   
+ ..   The default format is:
+ ..   
+@@ -4414,7 +4414,7 @@
+   wanted by the user and can be prevented by setting this resource to
+   False.
+   
+-  Note: Setting this to False would supress newlines in Mac files entirely,
++  Note: Setting this to False would suppress newlines in Mac files entirely,
+   leaving the control character <cr> where every line feed would be. Mac OS
+   X uses Unix files and is not affected.
+ 
+--- a/source/help_data.h
++++ b/source/help_data.h
+@@ -4224,7 +4224,7 @@
+ "wanted by the user and can be prevented by setting this resource to ",
+ "False. ",
+ "\n\n",
+-"Note: Setting this to False would supress newlines in Mac files entirely, ",
++"Note: Setting this to False would suppress newlines in Mac files entirely, ",
+ "leaving the control character <cr> where every line feed would be. Mac OS ",
+ "X uses Unix files and is not affected. ",
+ "\n\n",
+@@ -5616,7 +5616,7 @@
+ "         respective states: RO, LO, *.\n",
+ "   %u    user name\n",
+ "\01I\n",
+-"The format string and the component buttons are continously synchronized. ",
++"The format string and the component buttons are continuously synchronized. ",
+ "\n\n",
+ "The default format is: ",
+ "\n\n",

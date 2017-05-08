@@ -1,0 +1,124 @@
+Description: Nedit fails hard when no X-fonts are available, see LP: 1415309
+Source: https://sourceforge.net/p/nedit/git/ci/1a441b957a7f37bb9ab7ae15fefd3f41d59b3da4/
+Index: nedit/source/highlightData.c
+===================================================================
+--- nedit.orig/source/highlightData.c
++++ nedit/source/highlightData.c
+@@ -1280,7 +1280,7 @@ XFontStruct *FontOfNamedStyle(WindowInfo
+     XFontStruct *font;
+     
+     if (styleNo<0)
+-        return GetDefaultFontStruct(window->fontList);
++        return GetDefaultFontStruct(TheDisplay, window->fontList);
+     fontNum = HighlightStyles[styleNo]->font;
+     if (fontNum == BOLD_FONT)
+     	font = window->boldFontStruct;
+@@ -1289,10 +1289,10 @@ XFontStruct *FontOfNamedStyle(WindowInfo
+     else if (fontNum == BOLD_ITALIC_FONT)
+     	font = window->boldItalicFontStruct;
+     else /* fontNum == PLAIN_FONT */
+-    	font = GetDefaultFontStruct(window->fontList);
++    	font = GetDefaultFontStruct(TheDisplay, window->fontList);
+     
+     /* If font isn't loaded, silently substitute primary font */
+-    return font == NULL ? GetDefaultFontStruct(window->fontList) : font;
++    return font == NULL ? GetDefaultFontStruct(TheDisplay, window->fontList) : font;
+ }
+ 
+ int FontOfNamedStyleIsBold(char *styleName)
+Index: nedit/source/text.c
+===================================================================
+--- nedit.orig/source/text.c
++++ nedit/source/text.c
+@@ -778,9 +778,13 @@ static void initialize(TextWidget reques
+     textBuffer *buf;
+     Pixel white, black;
+     int textLeft;
+-    int charWidth = fs->max_bounds.width;
+-    int marginWidth = new->text.marginWidth;
+-    int lineNumCols = new->text.lineNumCols;
++    int charWidth;
++    int marginWidth;
++    int lineNumCols;
++
++    charWidth = fs->max_bounds.width;
++    marginWidth = new->text.marginWidth;
++    lineNumCols = new->text.lineNumCols;
+     
+     /* Set the initial window size based on the rows and columns resources */
+     if (request->core.width == 0)
+Index: nedit/source/window.c
+===================================================================
+--- nedit.orig/source/window.c
++++ nedit/source/window.c
+@@ -1845,7 +1845,7 @@ void SetFonts(WindowInfo *window, const
+ 
+     /* Change the primary font in all the widgets */
+     if (primaryChanged) {
+-        font = GetDefaultFontStruct(window->fontList);
++        font = GetDefaultFontStruct(TheDisplay, window->fontList);
+         XtVaSetValues(window->textArea, textNfont, font, NULL);
+         for (i=0; i<window->nPanes; i++)
+             XtVaSetValues(window->textPanes[i], textNfont, font, NULL);
+@@ -1867,7 +1867,7 @@ void SetFonts(WindowInfo *window, const
+        size appropriate for the new font, but only do so if there's only
+        _one_ document in the window, in order to avoid growing-window bug */
+     if (NDocuments(window) == 1) {
+-	fontWidth = GetDefaultFontStruct(window->fontList)->max_bounds.width;
++	fontWidth = GetDefaultFontStruct(TheDisplay, window->fontList)->max_bounds.width;
+ 	fontHeight = textD->ascent + textD->descent;
+ 	newWindowWidth = (oldTextWidth*fontWidth) / oldFontWidth + borderWidth;
+ 	newWindowHeight = (oldTextHeight*fontHeight) / oldFontHeight + 
+@@ -2250,7 +2250,7 @@ static Widget createTextArea(Widget pare
+             textNrows, rows, textNcolumns, cols,
+             textNlineNumCols, lineNumCols,
+             textNemulateTabs, emTabDist,
+-            textNfont, GetDefaultFontStruct(window->fontList),
++            textNfont, GetDefaultFontStruct(TheDisplay, window->fontList),
+             textNhScrollBar, hScrollBar, textNvScrollBar, vScrollBar,
+             textNreadOnly, IS_ANY_LOCKED(window->lockReasons),
+             textNwordDelimiters, delimiters,
+Index: nedit/util/misc.c
+===================================================================
+--- nedit.orig/util/misc.c
++++ nedit/util/misc.c
+@@ -1018,7 +1018,7 @@ char *GetXmStringText(XmString fromStrin
+ ** a Motif font list.  Since Motif stores this, it saves us from storing
+ ** it or querying it from the X server.
+ */
+-XFontStruct *GetDefaultFontStruct(XmFontList font)
++XFontStruct *GetDefaultFontStruct(Display *d, XmFontList font)
+ {
+     XFontStruct *fs;
+     XmFontContext context;
+@@ -1028,6 +1028,17 @@ XFontStruct *GetDefaultFontStruct(XmFont
+     XmFontListGetNextFont(context, &charset, &fs);
+     XmFontListFreeFontContext(context);
+     XtFree(charset);
++
++    /* FontList might be a render table with no only XFT fonts */    
++    if (fs == NULL) {
++        fs = XLoadQueryFont(d, "fixed");
++    }
++
++    if (fs == NULL) {
++        fprintf(stderr, "Unabled to load any fallback fonts.\n");
++        exit(EXIT_FAILURE);
++    }
++        
+     return fs;
+ }
+    
+Index: nedit/util/misc.h
+===================================================================
+--- nedit.orig/util/misc.h
++++ nedit/util/misc.h
+@@ -65,7 +65,7 @@ void RemoveDialogMnemonicHandler(Widget
+ void AccelLockBugPatch(Widget topWidget, Widget topMenuContainer);
+ void UpdateAccelLockPatch(Widget topWidget, Widget newButton);
+ char *GetXmStringText(XmString fromString);
+-XFontStruct *GetDefaultFontStruct(XmFontList font);
++XFontStruct *GetDefaultFontStruct(Display *d, XmFontList font);
+ XmString* StringTable(int count, ...);
+ void FreeStringTable(XmString *table);
+ void SimulateButtonPress(Widget widget);

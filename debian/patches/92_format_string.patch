@@ -1,0 +1,15 @@
+Description: Fix format strings for hardedned build flags
+Author: Jari Aalto <jari.aalto@cante.net>
+Last-Reviewed: Paul Gevers <elbrus@debian.org>, 2014-12-10
+
+--- a/source/nc.c
++++ b/source/nc.c
+@@ -503,7 +503,7 @@
+     
+     /* prompt user whether to start server */
+     if (!Preferences.autoStart) {
+-	printf(message);
++	printf("%s", message);
+ 	do {
+     	    c = getc(stdin);
+ 	} while (c == ' ' || c == '\t');

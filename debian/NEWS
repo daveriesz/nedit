@@ -1,0 +1,21 @@
+nedit (1:5.6~cvs20081118-9) unstable; urgency=low
+
+  This version of NEdit includes some patches to enhance tabbed editing. To
+  enable drag and drop you should add the following lines to your X-resources
+  file, be it ~/.Xresources, ~/.Xdefaults or ~/.Xdefaults-<hostname> or any
+  of the other possible locations: 
+  ! Enable drag & drop with tabs
+  nedit.dragDropTabs:true
+  nedit.dragDropTabsAnimation:true
+
+  You can now also enable a maximum number of tabs in one row. It you open more
+  files an additional row will be added. To set this number add a line like the
+  following to your X-resources:
+  ! Maximum number of tabs in one row
+  nedit*XmLFolder.tabsPerRow: 8
+
+  You can activate your X-resources file by either logging out and in or by
+  using the following command (for ~/.Xresources) :
+  $ xrdb -merge ~/.Xresources
+
+ -- Paul Gevers <elbrus@debian.org>  Tue, 29 Apr 2014 21:43:33 +0200
