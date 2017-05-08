@@ -16,7 +16,7 @@ XMLLIB = ../Microline/XmL/libXmL.a
 .c.o:
 	$(CC) -c -I../Microline -I../Xlt $(CFLAGS) -o $@ $<
 
-all: nedit nc
+all: nedit nedit-nc
 
 # Note there is no depedency for linkdate.c/o.  This is intentional,
 # we only want natural rebuilds to regenerate the link date.
@@ -26,7 +26,7 @@ nedit: $(OBJS) ../util/libNUtil.a $(XMLLIB) $(XLTLIB)
 	 $(XLTLIB) ../util/libNUtil.a $(LIBS) -o $@
 
 # Note LIBS isn't quite right here; it links unnecessarily against Motif
-nc: nc.o server_common.o ../util/libNUtil.a
+nedit-nc: nc.o server_common.o ../util/libNUtil.a
 	$(CC) $(CFLAGS) nc.o server_common.o ../util/libNUtil.a $(LIBS) -o $@
 
 help.o: help.c
@@ -39,7 +39,7 @@ highlightData.o: highlightData.c
 	$(CC) $(CFLAGS) $(BIGGER_STRINGS) -c highlightData.c -o $@
 
 clean:
-	rm -f $(OBJS) nedit nc nc.o parse.c linkdate.o
+	rm -f $(OBJS) nedit nedit-nc nc.o parse.c linkdate.o
 
 parse.c: parse.y
 	@echo "NOTE:  Don't worry about 'command not found' errors here"

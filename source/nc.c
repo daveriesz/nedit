@@ -69,7 +69,7 @@ static const char CVSID[] = "$Id: nc.c,v 1.48.2.2 2009/11/30 20:21:18 lebert Exp
 #include "../debug.h"
 #endif
 
-#define APP_NAME "nc"
+#define APP_NAME "nedit-nc"
 #define APP_CLASS "NEditClient"
 
 #define PROPERTY_CHANGE_TIMEOUT (Preferences.timeOut * 1000) /* milliseconds */
@@ -113,15 +113,15 @@ static const char cmdLineHelp[] =
 #ifdef VMS
 "[Sorry, no on-line help available.]\n"; /* Why is that ? */
 #else
-"Usage:  nc [-read] [-create]\n"
-"           [-line n | +n] [-do command] [-lm languagemode]\n"
-"           [-svrname name] [-svrcmd command]\n"
-"           [-ask] [-noask] [-timeout seconds]\n"
-"           [-geometry geometry | -g geometry] [-icon | -iconic]\n"
-"           [-tabbed] [-untabbed] [-group] [-wait]\n"
-"           [-V | -version] [-h|-help]\n"
-"           [-xrm resourcestring] [-display [host]:server[.screen]]\n"
-"           [--] [file...]\n";
+"Usage:  nedit-nc [-read] [-create]\n"
+"                 [-line n | +n] [-do command] [-lm languagemode]\n"
+"                 [-svrname name] [-svrcmd command]\n"
+"                 [-ask] [-noask] [-timeout seconds]\n"
+"                 [-geometry geometry | -g geometry] [-icon | -iconic]\n"
+"                 [-tabbed] [-untabbed] [-group] [-wait]\n"
+"                 [-V | -version] [-h|-help]\n"
+"                 [-xrm resourcestring] [-display [host]:server[.screen]]\n"
+"                 [--] [file...]\n";
 #endif /*VMS*/
 
 /* Structure to hold X Resource values */
