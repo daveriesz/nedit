@@ -1521,7 +1521,7 @@ static void bufModifiedCB(int pos, int nInserted, int nDeleted,
     textBuffer *buf = textD->buffer;
     int oldFirstChar = textD->firstChar;
     int scrolled, origCursorPos = textD->cursorPos;
-    int wrapModStart, wrapModEnd;
+    int wrapModStart=0, wrapModEnd=0;
  
     /* buffer modification cancels vertical cursor motion column */
     if (nInserted != 0 || nDeleted != 0)

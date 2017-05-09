@@ -480,7 +480,7 @@ static void issueCommand(WindowInfo *window, const char *command, char *input,
 	int inputLen, int flags, Widget textW, int replaceLeft,
 	int replaceRight, int fromMacro)
 {
-    int stdinFD, stdoutFD, stderrFD = 0;
+    int stdinFD = -1, stdoutFD = -1, stderrFD = 0;
     XtAppContext context = XtWidgetToApplicationContext(window->shell);
     shellCmdInfo *cmdData;
     pid_t childPid;

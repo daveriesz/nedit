@@ -208,7 +208,11 @@ static const Dimension XT_IGNORE_PPOSITION = 32767;
 WindowInfo *CreateWindow(const char *name, char *geometry, int iconic)
 {
     Widget winShell, mainWin, menuBar, pane, text, stats, statsAreaForm;
+#if 0 // dpr -- unused variable
     Widget closeTabBtn, tabForm, form;
+#else
+    Widget closeTabBtn, tabForm;
+#endif
     WindowInfo *window;
     Pixel bgpix, fgpix;
     Arg al[20];
@@ -604,6 +608,7 @@ WindowInfo *CreateWindow(const char *name, char *geometry, int iconic)
     if (GetPerfDragDropTabs())
         registerDropSite(window->tabBar);
     
+#if 0 // dpr -- unused variable
     /* create an unmanaged composite widget to get the folder
        widget to hide the 3D shadow for the manager area.
        Note: this works only on the patched XmLFolder widget */
@@ -612,6 +617,7 @@ WindowInfo *CreateWindow(const char *name, char *geometry, int iconic)
 	    XmNheight, 1,
 	    XmNresizable, False,
 	    NULL);
+#endif
 
     XtAddCallback(window->tabBar, XmNactivateCallback,
     	    raiseTabCB, NULL);

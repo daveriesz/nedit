@@ -1970,7 +1970,7 @@ static int loadTipsFile(const char *tipsFile, int index, int recLevel)
 {
     FILE *fp = NULL;
     char header[MAXLINE];
-    char *body, *tipIncFile;
+    char *body = NULL, *tipIncFile;
     char tipPath[MAXPATHLEN];
     char resolvedTipsFile[MAXPATHLEN+1];
     int nTipsAdded=0, langMode = PLAIN_LANGUAGE_MODE, oldLangMode;

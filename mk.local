@@ -1,4 +1,4 @@
 
 CDEFINES_nedit = -DUSE_DIRENT -DUSE_LPR_PRINT_CMD -DBUILD_UNTESTED_NEDIT
 CINCLUDE_nedit = -I/usr/X11R6/include
-COPT_nedit     = -O
+COPT_nedit     = -O -Wall

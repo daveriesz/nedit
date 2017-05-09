@@ -1608,7 +1608,7 @@ static void insertCol(textBuffer *buf, int column, int startPos,
 static void deleteRect(textBuffer *buf, int start, int end, int rectStart,
 	int rectEnd, int *replaceLen, int *endPos)
 {
-    int nLines, lineStart, lineEnd, len, endOffset;
+    int nLines, lineStart, lineEnd, len, endOffset=0;
     char *outStr, *outPtr, *line, *text, *expText;
     
     /* allocate a buffer for the replacement string large enough to hold 
