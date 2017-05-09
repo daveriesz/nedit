@@ -69,7 +69,7 @@ static const char CVSID[] = "$Id: nc.c,v 1.48.2.2 2009/11/30 20:21:18 lebert Exp
 #include "../debug.h"
 #endif
 
-#define APP_NAME "nedit-nc"
+#define APP_NAME "nnc"
 #define APP_CLASS "NEditClient"
 
 #define PROPERTY_CHANGE_TIMEOUT (Preferences.timeOut * 1000) /* milliseconds */
