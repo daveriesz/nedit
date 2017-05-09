@@ -1,5 +1,6 @@
 
 include ../../dprmk/mk.global
+include ../mk.local
 
 PROGRAM1 = $(BLD)/nedit
 PROGRAM2 = $(BLD)/nnc
@@ -40,11 +41,15 @@ CSOURCES1 = \
 	windowTitle.c
 
 CSOURCES2 = \
-	nc.c \
+	nnc.c \
 	server_common.c \
 
 CLDLIBLIBS1 = -lX11 -lXt -lXm -lXext -lICE -lm -lNUtil -lXmL -lXlt
 CLDLIBLIBS2 = -lX11 -lXt                       -lNUtil
+
+CDEFINES_local = $(CDEFINES_nedit)
+CINCLUDE_local = $(CINCLUDE_nedit)
+COPT_local     = $(COPT_nedit)
 
 CLDLIBDIRS_local = -L../Microline/XmL/$(BLD) -L../util/$(BLD) -L../Xlt/$(BLD)
 
