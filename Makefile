@@ -1,18 +1,21 @@
 
-SUBDIRS = source
+include ../dprmk/mk.global
+
+SUBDIRS = util Microline/XmL Xlt source
 
 all: build
 
-
 build:
-	@$(MAKE) -s target TARGET=
+	@$(MKNPD) target TARGET=
 
 clean:
-	@$(MAKE) -s target TARGET=clean
+	@$(MKNPD) target TARGET=clean
 
 target: $(SUBDIRS)
 
 $(SUBDIRS):
-	@$(MAKE) -C "$@" "$(TARGET)"
+	@echo Building $@ $(TARGET)
+	@$(MAKE) -C "$@" $(TARGET)
 
 .PHONY: all build clean target $(SUBDIRS)
+
