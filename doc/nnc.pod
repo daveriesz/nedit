@@ -3,27 +3,27 @@
 
 =head1 NAME
 
-nedit-nc - Client program for NEdit text editor
+nnc - Client program for NEdit text editor
 
 =head1 SYNOPSYS
 
-nedit-nc [B<-read>] [B<-create>] [B<-line> I<n> | B<+>I<n>] [B<-do> I<command>] 
-         [B<-ask>] [B<-noask>] [B<-svrname> I<name>] [B<-svrcmd> I<command>] 
-         [B<-lm> I<languagemode>] 
-         [B<-geometry> I<geometry> | B<-g> I<geometry>] [B<-icon> | B<-iconic>] 
-         [B<-display> I<[host]:server[.screen]>] 
-         [B<-timeout> I<seconds>] [B<-wait>] [B<-xrm> I<resourcestring>] 
-         [B<-tabbed>] [B<-untabbed>] [B<-group>] 
-         [B<-V> | B<-version>] [B<-h> | B<-help>] [B<-->] [file...]
+nnc [B<-read>] [B<-create>] [B<-line> I<n> | B<+>I<n>] [B<-do> I<command>] 
+    [B<-ask>] [B<-noask>] [B<-svrname> I<name>] [B<-svrcmd> I<command>] 
+    [B<-lm> I<languagemode>] 
+    [B<-geometry> I<geometry> | B<-g> I<geometry>] [B<-icon> | B<-iconic>] 
+    [B<-display> I<[host]:server[.screen]>] 
+    [B<-timeout> I<seconds>] [B<-wait>] [B<-xrm> I<resourcestring>] 
+    [B<-tabbed>] [B<-untabbed>] [B<-group>] 
+    [B<-V> | B<-version>] [B<-h> | B<-help>] [B<-->] [file...]
 
 =head1 DESCRIPTION
 
-B<nedit-nc> is the client interface to the NEdit text editor. A server can be
+B<nnc> is the client interface to the NEdit text editor. A server can be
 started explicitly by running NEdit in server mode:
 
  nedit -server
 
-If no server is running, B<nedit-nc> will start one unless configured otherwise.
+If no server is running, B<nnc> will start one unless configured otherwise.
 Client/server mode is useful for integrating NEdit with software development
 environments, mailers, and other programs; or just as a quick way to open files
 from the shell command line without starting a new NEdit session.
@@ -49,25 +49,25 @@ Go to line number I<n>.
 Execute an NEdit macro or action on the file following the -do argument on the
 command line.
 
-If you use this command without a filename, B<nedit-nc> would randomly choose
+If you use this command without a filename, B<nnc> would randomly choose
 one window to focus and execute the macro in.
 
 =item  B<-ask>, B<-noask>
 
-Instructs B<nedit-nc> whether to automatically start a server if one is not
+Instructs B<nnc> whether to automatically start a server if one is not
 available. This overrides the X resource `nc.autoStart'.
 
 
 =item  B<-svrname> I<name>
 
-Explicitly instructs B<nedit-nc> which server to connect to, an instance of
+Explicitly instructs B<nnc> which server to connect to, an instance of
 L<nedit(1)> with a corresponding B<-svrname> argument.  By naming servers, you
 can run several simultaneously, and direct files and commands specifically to
 any one.
 
 =item  B<-svrcmd> I<command>
 
-The command which B<nedit-nc> uses to start an NEdit server. It is also settable
+The command which B<nnc> uses to start an NEdit server. It is also settable
 via the X resource `nc.serverCommand', by default, I<"nedit -server">.
 
 =item  B<-lm> I<languagemode>
@@ -107,11 +107,11 @@ increase the time-out period. In most cases, the default is fine.
 
 =item B<-wait>
 
-Instructs B<nedit-nc> not to return to the shell until all files given
+Instructs B<nnc> not to return to the shell until all files given
 are closed.
 
-Normally, B<nedit-nc> returns once the files given in its command line
-are opened by the server. When this option is given, B<nedit-nc> returns
+Normally, B<nnc> returns once the files given in its command line
+are opened by the server. When this option is given, B<nnc> returns
 only after the last file given in this call is closed.
 Note that this option affects all files, not only the ones
 following this option in the command line.
@@ -167,11 +167,11 @@ for your display:
 
 =head1 NOTES
 
-Communication between L<nedit-nc(1)> and L<nedit(1)> is through the X display.
-So as long as X windows is set up and working properly, B<nedit-nc> will work
-properly as well. B<nedit-nc> uses the `DISPLAY' environment variable, the
+Communication between L<nnc(1)> and L<nedit(1)> is through the X display.
+So as long as X windows is set up and working properly, B<nnc> will work
+properly as well. B<nnc> uses the `DISPLAY' environment variable, the
 machine name and your user name to find the appropriate server, meaning, if you
-have several machines sharing a common file system, B<nedit-nc> will not be
+have several machines sharing a common file system, B<nnc> will not be
 able to find a server that is running on a machine with a different host name,
 even though it may be perfectly appropriate for editing a given file.
 
@@ -182,11 +182,11 @@ command line, for example:
 
 =item  incorrect:
 
-  nedit-nc file.c -line 25
+  nnc file.c -line 25
 
 =item  correct:
 
-  nedit-nc -line 25 file.c
+  nnc -line 25 file.c
 
 =back
 
