@@ -1373,7 +1373,11 @@ void PrintWindow(WindowInfo *window, int selectedOnly)
 */
 void PrintString(const char *string, int length, Widget parent, const char *jobName)
 {
+#ifdef USE_MKSTEMP
+    char tmpFileName[256];
+#else
     char tmpFileName[L_tmpnam];    /* L_tmpnam defined in stdio.h */
+#endif
     FILE *fp;
     int fd;
 
@@ -1384,11 +1388,18 @@ void PrintString(const char *string, int length, Widget parent, const char *jobN
 	    1. Create a filename
 	    2. Open the file with the O_CREAT|O_EXCL flags
 	So all an attacker can do is a DoS on the print function. */
+#ifdef USE_MKSTEMP
+    memset(tmpFileName, 0, 256);
+    snprintf(tmpFileName, 255, "/tmp/nedit-XXXXXX");
+#else
     tmpnam(tmpFileName);
+#endif
 
     /* open the temporary file */
 #ifdef VMS
     if ((fp = fopen(tmpFileName, "w", "rfm = stmlf")) == NULL)
+#elif defined(USE_MKSTEMP)
+    if (((fd = mkstemp(tmpFileName)) < 0) || ((fp = fdopen(fd, "w")) == NULL))
 #else
     if ((fd = open(tmpFileName, O_CREAT|O_EXCL|O_WRONLY, S_IRUSR | S_IWUSR)) < 0 || (fp = fdopen(fd, "w")) == NULL)
 #endif /* VMS */
